@@ -54,4 +54,17 @@ class IndexControllerTest {
         
         verify(model,times(1)).addAttribute(eq("recipes"),argumentCaptor.capture());
     }
+@Test
+    void getRecipe() throws Exception {
+    MockMvc mockMvc= MockMvcBuilders.standaloneSetup(indexController).build();
+    mockMvc.perform(get("/recipe/1/show")).andExpect(status().isOk())
+            .andExpect(view().name("show"));
+    }
+
+    @Test
+    void deleteById() throws Exception {
+        MockMvc mockMvc= MockMvcBuilders.standaloneSetup(indexController).build();
+        mockMvc.perform(get("/recipe/1/delete")).andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
+    }
 }

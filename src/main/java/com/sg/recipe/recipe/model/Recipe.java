@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 
 
 import javax.persistence.*;
@@ -14,6 +15,8 @@ import java.util.Set;
 @Entity
 @Accessors(chain = true)
 @EqualsAndHashCode(exclude = {"image","ingredients"})
+@ToString(exclude = {"image","ingredients"})
+@Slf4j
 public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +30,13 @@ public class Recipe {
     private String directions;
      @Lob
     private Byte[] image;
+
+    public void setNotes(Notes notes) {
+        log.debug("notes found here  ..",notes);
+        notes.setRecipe(this);
+        this.notes = notes;
+    }
+
     @OneToOne(cascade= CascadeType.ALL)
     private Notes notes;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")

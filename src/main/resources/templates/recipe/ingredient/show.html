@@ -14,29 +14,20 @@
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<td><a href="#" th:href="@{'/recipe/new'}" >Create Recipe</a>
 <table class="table">
     <thead style="background-color: mediumturquoise;">
     <tr>
         <th>#</th>
-        <th>Prep Time</th>
-        <th>Cook time</th>
-        <th>View</th>
-        <th>Update</th>
-        <th>Delete</th>
+        <th>Description</th>
+        <th>Amount</th>
+
     </tr>
     </thead>
-    <tr th:each="recipe : ${recipes}">
+    <tr>
 
-        <td th:text="${recipe.description}"/>
-        <td th:text="${recipe.prepTime}"/>
-        <td th:text="${recipe.cookTime}"/>
-
-        <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/show'}" th:text="${recipe.id}">show</a>
-        <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/update'}" th:text="${recipe.id}">update</a>
-        <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/delete'}" th:text="${recipe.id}">Delete</a>
-        </td>
-
+        <td th:text="${ingredient.id}"/>
+        <td th:text="${ingredient.description}"/>
+        <td th:text="${ingredient.amount}"/>
     </tr>
 </table>
 </body>

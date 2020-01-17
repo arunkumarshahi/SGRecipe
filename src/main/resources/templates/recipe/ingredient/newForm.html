@@ -14,30 +14,22 @@
             crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<td><a href="#" th:href="@{'/recipe/new'}" >Create Recipe</a>
-<table class="table">
-    <thead style="background-color: mediumturquoise;">
-    <tr>
-        <th>#</th>
-        <th>Prep Time</th>
-        <th>Cook time</th>
-        <th>View</th>
-        <th>Update</th>
-        <th>Delete</th>
-    </tr>
-    </thead>
-    <tr th:each="recipe : ${recipes}">
 
-        <td th:text="${recipe.description}"/>
-        <td th:text="${recipe.prepTime}"/>
-        <td th:text="${recipe.cookTime}"/>
+<form th:object="${ingredient}" th:action="@{'/recipe/'+${ingredient.recipeId}+'/ingredient/'}" method="post">
 
-        <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/show'}" th:text="${recipe.id}">show</a>
-        <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/update'}" th:text="${recipe.id}">update</a>
-        <td><a href="#" th:href="@{'/recipe/'+${recipe.id}+'/delete'}" th:text="${recipe.id}">Delete</a>
-        </td>
-
-    </tr>
-</table>
+    <table class="table">
+        <tr>
+            <input type="text" th:field="*{recipeId}"/>
+            <label>Id</label>
+            <input type="text" th:field="*{id}"/>
+            <label>description</label>
+            <input type="text" th:field="*{description}"/>
+            <label>amount</label>
+            <input th:field="*{amount}" type="text"/>
+            <label>uom</label>
+            <input th:field="*{unitOfMeasure.description}" type="text"/>
+    </table>
+    <input type="submit">submit"</input>
+</form>
 </body>
 </html>

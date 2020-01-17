@@ -7,12 +7,13 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Data
-@Entity
+@Entity@EqualsAndHashCode(exclude = {"recipe"})
+@ToString(exclude = {"recipe"})
 public class Notes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
-    @ToString.Exclude @EqualsAndHashCode.Exclude private Recipe recipe;
+    private Recipe recipe;
     private String recipeNotes;
 }
