@@ -26,22 +26,35 @@
         </tr>
         </thead>
         <tr>
+
             <label>Id</label>
-            <input type="text" th:field="*{id}" />
+            <input type="text" th:field="*{id}"/>
+            <ul>
+                <li style="color: red;" th:each="err : ${#fields.errors('description')}" th:text="${err}"/>
+            </ul>
             <label>description</label>
-            <input type="text" th:field="*{description}" />
+            <input type="text" th:field="*{description}"/>
+            <ul>
+                <li style="color: red;" th:each="err : ${#fields.errors('cookTime')}" th:text="${err}"/>
+            </ul>
             <label>cookTime</label>
-            <input th:field="*{cookTime}" type="text" />
+            <input th:field="*{cookTime}" type="text"/>
+            <ul>
+                <li style="color: red;" th:each="err : ${#fields.errors('prepTime')}" th:text="${err}"/>
+            </ul>
             <label>prepTime</label>
-            <input th:field="*{prepTime}" type="text" />
-
-            <input th:field="*{notes.id}" type="hidden" />
-            <p>Recipe Notes: <textarea th:field="*{notes.recipeNotes}" ></textarea></p>
-
+            <input th:field="*{prepTime}" type="text"/>
+            <ul>
+                <li style="color: red;" th:each="err : ${#fields.errors('servings')}" th:text="${err}"/>
+            </ul>
+            <label>Serving</label>
+            <input th:field="*{servings}" type="text"/>
+            <input th:field="*{notes.id}" type="hidden"/>
+            <p>Recipe Notes: <textarea th:field="*{notes.recipeNotes}"></textarea></p>
 
 
     </table>
-        <input type="submit">submit"</input>
+    <input type="submit">submit"</input>
 </form>
 </body>
 </html>

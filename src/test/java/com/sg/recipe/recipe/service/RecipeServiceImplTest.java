@@ -2,6 +2,7 @@ package com.sg.recipe.recipe.service;
 
 import com.sg.recipe.recipe.converters.RecipeCommandToRecipe;
 import com.sg.recipe.recipe.converters.RecipeToRecipeCommand;
+import com.sg.recipe.recipe.exceptions.NotFoundExceptionx;
 import com.sg.recipe.recipe.model.Recipe;
 import com.sg.recipe.recipe.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,4 +56,14 @@ class RecipeServiceImplTest {
         recipeService.deleteById(idToBeDeleted);
         verify(recipeRepository,times(1)).deleteById(anyLong());
     }
+    @Test
+    void notFoundExceptionForfindById() {
+        when(recipeRepository.findById(anyLong())).thenReturn(Optional.empty());
+        Exception exception = assertThrows(
+                NotFoundExceptionx.class,
+                () -> recipeService.findById(anyLong()));
+
+        assertTrue(exception.getMessage().contains("record not found"));
+    }
+
 }

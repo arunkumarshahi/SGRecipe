@@ -3,6 +3,7 @@ package com.sg.recipe.recipe.service;
 import com.sg.recipe.recipe.command.RecipeCommand;
 import com.sg.recipe.recipe.converters.RecipeCommandToRecipe;
 import com.sg.recipe.recipe.converters.RecipeToRecipeCommand;
+import com.sg.recipe.recipe.exceptions.NotFoundExceptionx;
 import com.sg.recipe.recipe.model.Recipe;
 import com.sg.recipe.recipe.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe findById(Long id) {
-        return recipeRepository.findById(id).orElse(null);
+        log.info("findById.."+id);
+        return recipeRepository.findById(id).orElseThrow(() -> new NotFoundExceptionx("record not found !!"));
     }
 
     @Override
@@ -45,7 +47,8 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public RecipeCommand findCommandById(Long id) {
-        return recipeToRecipeCommand.convert(recipeRepository.findById(id).orElse(null));
+        log.info("data --------- "+id);
+        return recipeToRecipeCommand.convert(recipeRepository.findById(id).orElseThrow(()->new NotFoundExceptionx(("no data found"))));
     }
 
     @Override
