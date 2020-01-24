@@ -4,19 +4,19 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
-@Entity
 @Accessors(chain = true)
-public class Category {
+@Document
+public class Category {//extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String description;
-    @ManyToMany(mappedBy = "categories")
+//    @ManyToMany(mappedBy = "categories")
     @ToString.Exclude @EqualsAndHashCode.Exclude private Set<Recipe> recipes=new HashSet<Recipe>();
 }

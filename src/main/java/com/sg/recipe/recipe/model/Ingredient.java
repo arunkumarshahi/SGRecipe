@@ -2,20 +2,22 @@ package com.sg.recipe.recipe.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 import java.math.BigDecimal;
 @Data
-@Entity
 @Accessors(chain = true)
-public class Ingredient {
+@Document
+public class Ingredient {//extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String description;
     private BigDecimal amount;
-    @ManyToOne
-    private Recipe recipe;
-    @OneToOne
+//    @ManyToOne
+//    private Recipe recipe;
+//    @OneToOne
+    @DBRef
     private UnitOfMeasure uom;
 }

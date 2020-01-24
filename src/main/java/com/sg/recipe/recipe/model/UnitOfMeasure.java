@@ -2,18 +2,14 @@ package com.sg.recipe.recipe.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
-@Entity
 @Accessors(chain = true)
-public class UnitOfMeasure {
+@Document
+public class UnitOfMeasure {//extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String uom;
 }

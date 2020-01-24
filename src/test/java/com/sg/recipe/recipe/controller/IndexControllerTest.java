@@ -66,7 +66,7 @@ class IndexControllerTest {
 @Test
     void getRecipe() throws Exception {
     Recipe recipe=new Recipe().setDescription("Panner");
-    recipe.setId(1L);
+//    recipe.setId(1L);
     when(recipeService.findById(anyLong())).thenReturn(recipe);
     MockMvc mockMvc= MockMvcBuilders.standaloneSetup(recipeController).build();
     mockMvc.perform(get("/recipe/1/show")).andExpect(status().isOk())
@@ -104,7 +104,7 @@ class IndexControllerTest {
     @Test
     void saveOrUpdateRecipe() throws Exception {
         RecipeCommand recipeCommand=new RecipeCommand();
-        recipeCommand.setId(1L);
+//        recipeCommand.setId(1L);
         recipeCommand.setPrepTime(1005);
         recipeCommand.setDescription("A");
         recipeCommand.setCookTime(10);

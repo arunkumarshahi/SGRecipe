@@ -30,13 +30,13 @@ public class ImageController {
     }
 
     @GetMapping("recipe/{id}/upload")
-    public String getUploadFile(@PathVariable Long id, Model model) {
+    public String getUploadFile(@PathVariable String id, Model model) {
         model.addAttribute("recipe", recipeService.findById(id));
         return "recipe/imageUploadForm";
     }
 
     @PostMapping("recipe/{id}/image")
-    public String postImage(@PathVariable Long id, @RequestParam("imagefile") MultipartFile file) {
+    public String postImage(@PathVariable String id, @RequestParam("imagefile") MultipartFile file) {
         log.debug("postImage :: --> ", id);
         try {
             imageService.saveImageFile(id,file);
@@ -47,7 +47,7 @@ public class ImageController {
     }
     //th:src="@{'/recipe/' + ${recipe.id} + '/recipeimage'}"
     @GetMapping("recipe/{id}/recipeimage")
-    public void renderImageFromDB(@PathVariable Long id, HttpServletResponse response){
+    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response){
         RecipeCommand recipeCommand=recipeService.findCommandById(id);
         Byte[] image = recipeCommand.getImage();
         byte[] byteArray=new byte[image.length];

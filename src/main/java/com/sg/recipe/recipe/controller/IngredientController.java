@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.persistence.criteria.CriteriaBuilder;
+//import javax.persistence.criteria.CriteriaBuilder;
 
 @Controller
 @Slf4j
@@ -27,7 +27,7 @@ public class IngredientController {
 
     @GetMapping({"/recipe/{id}/ingredients"})
     public String getIngredients(@PathVariable String id, Model model) {
-        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(id));
+        RecipeCommand recipeCommand = recipeService.findCommandById(id);
         model.addAttribute("recipe", recipeCommand);
         return "recipe/ingredient/list";
     }
@@ -42,7 +42,7 @@ public class IngredientController {
     @GetMapping("/recipe/{recipeId}/ingredient/new")
     public String newRecipe(@PathVariable Long recipeId, Model model) {
         IngredientCommand ingredientCommand = new IngredientCommand();
-        ingredientCommand.setRecipeId(recipeId);
+//        ingredientCommand.setRecipeId(recipeId);
         model.addAttribute("ingredient", ingredientCommand);
         return "recipe/ingredient/newForm";
     }

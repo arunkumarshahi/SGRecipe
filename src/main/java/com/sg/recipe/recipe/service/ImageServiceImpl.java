@@ -18,7 +18,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void saveImageFile(Long recipeId, MultipartFile file) throws IOException {
+    public void saveImageFile(String recipeId, MultipartFile file) throws IOException {
         log.debug("recipe id ::"+recipeId);
         log.debug("recipe id ::"+file);
         Byte[] byteArray=new Byte[file.getBytes().length];

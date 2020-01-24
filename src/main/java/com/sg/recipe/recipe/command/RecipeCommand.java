@@ -1,6 +1,7 @@
 package com.sg.recipe.recipe.command;
 
 import com.sg.recipe.recipe.model.Difficulty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,9 +14,9 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@Data
 public class RecipeCommand {
-    private Long id;
-
+    private String id;
     @Size(min = 3,max = 255)
     private String description;
     @Min(3)

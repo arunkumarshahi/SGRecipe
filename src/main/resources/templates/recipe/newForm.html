@@ -51,7 +51,10 @@
             <input th:field="*{servings}" type="text"/>
             <input th:field="*{notes.id}" type="hidden"/>
             <p>Recipe Notes: <textarea th:field="*{notes.recipeNotes}"></textarea></p>
-
+<!--            <p>ingredient: <textarea th:field="*{ingredients}"></textarea></p>-->
+        <p th:each="ingredient,itemStat  : *{ingredients}">
+            <input th:field="*{ingredients[__${itemStat.index}__].id}"/>
+        </p>
 
     </table>
     <input type="submit">submit"</input>

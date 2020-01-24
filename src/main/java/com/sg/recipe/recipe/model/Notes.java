@@ -3,17 +3,18 @@ package com.sg.recipe.recipe.model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.*;
 
 @Data
-@Entity@EqualsAndHashCode(exclude = {"recipe"})
+@EqualsAndHashCode(exclude = {"recipe"})
 @ToString(exclude = {"recipe"})
-public class Notes {
+@Document
+public class Notes {//extends BaseEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @OneToOne
-    private Recipe recipe;
+    private String id;
+//    @OneToOne
+//    private Recipe recipe;
     private String recipeNotes;
 }

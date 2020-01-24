@@ -36,10 +36,11 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
-        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
-        IngredientCommand ingredientCommand = recipe.getIngredients().stream().filter(ingredient -> ingredient.getId() == ingredientId)
-                .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst().orElse(null);
-        return ingredientCommand;
+//        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
+//        IngredientCommand ingredientCommand = recipe.getIngredients().stream().filter(ingredient -> ingredient.getId() == ingredientId)
+//                .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst().orElse(null);
+//        return ingredientCommand;
+        return null;
     }
 
     @Override
@@ -49,27 +50,28 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     public IngredientCommand saveIngradientCommand(IngredientCommand ingredientCommand) {
-        log.debug("ingredientCommand getRecipeId ::"+ingredientCommand.getRecipeId());
-        UnitOfMeasure unitOfMeasure=uomRepository.findById(1L).get();
-        ingredientCommand.setUnitOfMeasure(unitOfMeasureToUnitOfMeasureCommand.convert(unitOfMeasure));
-        Recipe recipe = recipeRepository.findById(ingredientCommand.getRecipeId()).orElse(null);
-        Ingredient ingredient= ingredientCommandToIngredient.convert(ingredientCommand);
-        Optional<Ingredient> ingredientOptional=recipe.getIngredients().stream().filter(ingredient1 -> ingredient1.getId()==ingredient.getId()).findFirst();
-        log.debug("list retrieved ingredient -->"+recipe.getIngredients());
-        log.debug("single retrieved ingredient -->"+ingredient);
-
-        if(ingredientOptional.isPresent()){
-            Ingredient optionalIngredient=ingredientOptional.get();
-            optionalIngredient.setDescription(ingredientCommand.getDescription());
-            optionalIngredient.setAmount(ingredientCommand.getAmount());
-
-        }else {
-            recipe.getIngredients().add(ingredient);
-            ingredient.setRecipe(recipe);
-        }
-        return ingredientToIngredientCommand.convert(recipeRepository.save(recipe).getIngredients().
-                stream().filter(ingredient1 ->
-                (ingredient1.getDescription().equalsIgnoreCase(ingredientCommand.getDescription()))).
-                findFirst().get());
+//        log.debug("ingredientCommand getRecipeId ::"+ingredientCommand.getRecipeId());
+//        UnitOfMeasure unitOfMeasure=uomRepository.findById(1L).get();
+//        ingredientCommand.setUnitOfMeasure(unitOfMeasureToUnitOfMeasureCommand.convert(unitOfMeasure));
+//        //Recipe recipe = recipeRepository.findById(ingredientCommand.getRecipeId()).orElse(null);
+//        Ingredient ingredient= ingredientCommandToIngredient.convert(ingredientCommand);
+//        Optional<Ingredient> ingredientOptional=recipe.getIngredients().stream().filter(ingredient1 -> ingredient1.getId()==ingredient.getId()).findFirst();
+//        log.debug("list retrieved ingredient -->"+recipe.getIngredients());
+//        log.debug("single retrieved ingredient -->"+ingredient);
+//
+//        if(ingredientOptional.isPresent()){
+//            Ingredient optionalIngredient=ingredientOptional.get();
+//            optionalIngredient.setDescription(ingredientCommand.getDescription());
+//            optionalIngredient.setAmount(ingredientCommand.getAmount());
+//
+//        }else {
+//            recipe.getIngredients().add(ingredient);
+//            ingredient.setRecipe(recipe);
+//        }
+//        return ingredientToIngredientCommand.convert(recipeRepository.save(recipe).getIngredients().
+//                stream().filter(ingredient1 ->
+//                (ingredient1.getDescription().equalsIgnoreCase(ingredientCommand.getDescription()))).
+//                findFirst().get());
+        return null;
     }
 }
