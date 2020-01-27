@@ -5,17 +5,32 @@ import com.sg.recipe.recipe.repositories.CategoryRepository;
 import com.sg.recipe.recipe.repositories.IngredientRepository;
 import com.sg.recipe.recipe.repositories.RecipeRepository;
 import com.sg.recipe.recipe.repositories.UOMRepository;
+import com.sg.recipe.recipe.repositories.reactive.CategoryReactiveRepository;
+import com.sg.recipe.recipe.repositories.reactive.RecipeReactiveRepository;
+import com.sg.recipe.recipe.repositories.reactive.UOMReactiveRepository;
+
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
 @Component
+@Slf4j
 public class DataLoader implements CommandLineRunner {
 
     private final RecipeRepository recipeRepository;
     private final CategoryRepository categoryRepository;
     private final UOMRepository uomRepository;
+    @Autowired
+    UOMReactiveRepository uomReactiveRepository;
+    @Autowired
+    RecipeReactiveRepository recipeReactiveRepository;
+    @Autowired
+    CategoryReactiveRepository catReactiveRepository;
     private final IngredientRepository ingredientRepository;
     public DataLoader(RecipeRepository recipeRepository, CategoryRepository categoryRepository, UOMRepository uomRepository, IngredientRepository ingredientRepository) {
         this.recipeRepository = recipeRepository;
@@ -35,6 +50,19 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         recipeRepository.deleteAll();
         loadData();
+        log.info("uom count == "+uomReactiveRepository.count().block().toString());
+        log.info("uom count from traditional repo == "+uomRepository.count());
+        
+        uomReactiveRepository.findAll(). forEach(System.out::println).block;
+        log.info("======== Reactive repo prinitng ===========");
+        uomRepository.findAll().forEach(System.out::println);
+        log.info("Recipe count == "+recipeReactiveRepository.count().block().toString());
+        log.info("Recipe count from traditional repo == "+recipeRepository.count());
+        
+        log.info("category count == "+catReactiveRepository.count().block());
+        log.info("category count from traditional repo == "+categoryRepository.count());
+        
+
     }
     private void  loadData(){
         Recipe recipe=new Recipe();
@@ -46,6 +74,12 @@ public class DataLoader implements CommandLineRunner {
         UnitOfMeasure uom1=new UnitOfMeasure();
         uom1.setUom("Pinch");
         uom1=uomRepository.save(uom1);
+        
+        UnitOfMeasure uom2=new UnitOfMeasure();
+        uom2.setUom("Tea Spoon");
+        uom2=uomRepository.save(uom2);
+        
+        
         category1=categoryRepository.save(category1);
         System.out.println("category1 = "+category1);
         System.out.println("uom1 = "+uom1);
