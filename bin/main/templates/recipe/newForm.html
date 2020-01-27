@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.min.css}">
+
+    <script src="/webjars/jquery/3.0.0/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous" th:src="@{/webjars/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<form th:object="${recipe}" th:action="@{/recipe/}" method="post">
+    <table class="table">
+        <thead style="background-color: mediumturquoise;">
+        <tr>
+            <th>#</th>
+            <th>Prep Time</th>
+            <th>Cook time</th>
+
+        </tr>
+        </thead>
+        <tr>
+
+            <label>Id</label>
+            <input type="text" th:field="*{id}"/>
+            <ul>
+                <li style="color: red;" th:each="err : ${#fields.errors('description')}" th:text="${err}"/>
+            </ul>
+            <label>description</label>
+            <input type="text" th:field="*{description}"/>
+            <ul>
+                <li style="color: red;" th:each="err : ${#fields.errors('cookTime')}" th:text="${err}"/>
+            </ul>
+            <label>cookTime</label>
+            <input th:field="*{cookTime}" type="text"/>
+            <ul>
+                <li style="color: red;" th:each="err : ${#fields.errors('prepTime')}" th:text="${err}"/>
+            </ul>
+            <label>prepTime</label>
+            <input th:field="*{prepTime}" type="text"/>
+            <ul>
+                <li style="color: red;" th:each="err : ${#fields.errors('servings')}" th:text="${err}"/>
+            </ul>
+            <label>Serving</label>
+            <input th:field="*{servings}" type="text"/>
+            <input th:field="*{notes.id}" type="hidden"/>
+            <p>Recipe Notes: <textarea th:field="*{notes.recipeNotes}"></textarea></p>
+<!--            <p>ingredient: <textarea th:field="*{ingredients}"></textarea></p>-->
+        <p th:each="ingredient,itemStat  : *{ingredients}">
+            <input th:field="*{ingredients[__${itemStat.index}__].id}"/>
+        </p>
+
+    </table>
+    <input type="submit">submit"</input>
+</form>
+</body>
+</html>
