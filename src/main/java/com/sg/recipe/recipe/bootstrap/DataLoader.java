@@ -1,4 +1,4 @@
-package com.sg.recipe.recipe.bootstrap;
+	package com.sg.recipe.recipe.bootstrap;
 
 import com.sg.recipe.recipe.model.*;
 import com.sg.recipe.recipe.repositories.CategoryRepository;
@@ -53,7 +53,8 @@ public class DataLoader implements CommandLineRunner {
         log.info("uom count == "+uomReactiveRepository.count().block().toString());
         log.info("uom count from traditional repo == "+uomRepository.count());
         
-        uomReactiveRepository.findAll(). forEach(System.out::println).block;
+        uomReactiveRepository.findAll().collectList().block().forEach(System.out::println);
+        //flatMap(x -> {  forEach(System.out::println).
         log.info("======== Reactive repo prinitng ===========");
         uomRepository.findAll().forEach(System.out::println);
         log.info("Recipe count == "+recipeReactiveRepository.count().block().toString());
