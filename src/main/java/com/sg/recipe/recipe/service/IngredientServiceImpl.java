@@ -10,7 +10,13 @@ import com.sg.recipe.recipe.model.UnitOfMeasure;
 import com.sg.recipe.recipe.repositories.IngredientRepository;
 import com.sg.recipe.recipe.repositories.RecipeRepository;
 import com.sg.recipe.recipe.repositories.UOMRepository;
+import com.sg.recipe.recipe.repositories.reactive.IngredientReactiveRepository;
+import com.sg.recipe.recipe.repositories.reactive.RecipeReactiveRepository;
+import com.sg.recipe.recipe.repositories.reactive.UOMReactiveRepository;
+
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,14 +24,14 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class IngredientServiceImpl implements IngredientService {
-    private final RecipeRepository recipeRepository;
+    private final RecipeReactiveRepository recipeRepository;
     private final IngredientToIngredientCommand ingredientToIngredientCommand;
     private final IngredientCommandToIngredient ingredientCommandToIngredient;
-    private final IngredientRepository ingredientRepository;
-    private final UOMRepository uomRepository;
+    private final IngredientReactiveRepository ingredientRepository;
+    private final UOMReactiveRepository uomRepository;
     private final UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
 
-    public IngredientServiceImpl(RecipeRepository recipeRepository, IngredientToIngredientCommand ingredientToIngredientCommand, IngredientCommandToIngredient ingredientCommandToIngredient, IngredientRepository ingredientRepository, UOMRepository uomRepository, UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand) {
+    public IngredientServiceImpl(RecipeReactiveRepository recipeRepository, IngredientToIngredientCommand ingredientToIngredientCommand, IngredientCommandToIngredient ingredientCommandToIngredient, IngredientReactiveRepository ingredientRepository, UOMReactiveRepository uomRepository, UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand) {
         this.recipeRepository = recipeRepository;
         this.ingredientToIngredientCommand = ingredientToIngredientCommand;
         this.ingredientCommandToIngredient = ingredientCommandToIngredient;
@@ -35,12 +41,18 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
-//        Recipe recipe = recipeRepository.findById(recipeId).orElse(null);
-//        IngredientCommand ingredientCommand = recipe.getIngredients().stream().filter(ingredient -> ingredient.getId() == ingredientId)
-//                .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst().orElse(null);
-//        return ingredientCommand;
-        return null;
+    public Mono<IngredientCommand> findByRecipeIdAndIngredientId(String recipeId, String ingredientId) {
+    	recipeRepository.findById(recipeId).map(recipe -> recipe.getIngredients()
+                     .stream()
+                     .filter(ingredient -> ingredient.getId().equalsIgnoreCase(ingredientId))
+                     .findFirst())
+             .filter(Optional::isPresent)
+             .map(ingredient -> {
+                 IngredientCommand command = ingredientToIngredientCommand.convert(ingredient.get());
+                 command.setRecipeId(recipeId);
+                 return command;
+             });
+    	return null;
     }
 
     @Override
